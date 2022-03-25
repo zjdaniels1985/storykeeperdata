@@ -1,14 +1,60 @@
-# story-keeper
+# Story Keeper
 
 ## Database Requirement
 This program requires a mongodb database installed and running with a database schema name of storykeeperdb.<br>
 The username, password, and url for the database must be updated in the application.properties file if different than the default.<br>
 
-## Backend Application
-This is an opinionated Spring Boot Application for a Bookstore Management Project.
+## The Docker container option for Database
+The database can be initiated using Docker. 
+1. Change directory into the root of the project folder and run the following:
+```aidl
+docker-compose up -d
+```
 
-Application URL:<br>
-http<nolink>://public IP posted in teams whiteboard:9500/api<br>
+## Check Docker Status
+```aidl
+docker ps
+```
+Both the MongoDB and ExpressMongo Containers should be up and running:
+```aidl
+CONTAINER ID   IMAGE           COMMAND                  CREATED       STATUS       PORTS                                           NAMES
+1f29a80479c6   mongo-express   "tini -- /docker-ent…"   4 hours ago   Up 4 hours   0.0.0.0:9001->8081/tcp, :::9001->8081/tcp       mongo-express
+6e376c4e70f9   mongo           "docker-entrypoint.s…"   3 days ago    Up 4 hours   0.0.0.0:27017->27017/tcp, :::27017->27017/tcp   mongodb
+
+```
+## Database Setup
+1. Navigate to the following url in the browser if you have mongo-express container running:
+   1. localhost:9001
+2. Type: 'storykeeperdb' into the Create Database Input for the Database name:
+![img.png](img.png)
+3. and Click the +Create Database Button.
+4. You are now ready to start the Spring Application from any Java IDE, I prefer Intellij
+
+## Development Environment Setup
+1. Spring Cli Required Download and install from:
+   1. https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started.html#getting-started.installing.cli
+2. JDK 1.8 (Java 8) Required and needs to be set to default
+   1. https://www.oracle.com/java/technologies/downloads/#java8
+3. Maven is Required:
+   1. https://maven.apache.org/download.cgi
+## IDE Setup
+1. Make sure IDE is using JDK 8.
+   1. Check with IDE instructions on how to set the SDK version
+2. Open the pom.xml file in the editor
+3. Right-Click in the open pom.xml file in the editor and select Maven-> Reload Project. This will download the required Maven/Spring Dependencies
+
+## Run the project
+1. Start the application by executing debug/run on the StorykeeperDataApplication.java class
+2. The Spring Cli should report building of the database collections and finally report:
+```aidl
+2022-03-25 00:02:53.835  INFO 28795 --- [  restartedMain] e.c.s.StorykeeperDataApplication         : Springboot and mongodb sequence id generator started successfully.
+```
+3. Navigate to thhe following url in the browser:
+   1. localhost:8080
+   2. The Story Keeper Application Login screen should be shown:
+![img_1.png](img_1.png)
+
+
 
 ## Data Models
 
@@ -84,8 +130,8 @@ http<nolink>://public IP posted in teams whiteboard:9500/api<br>
 }
 ```
 
-## APIs
-### Books
+# APIs
+## Books
 #### GET methods
 URL IP:9500/api/books    : List ALL books IN books collection<br>
 URL IP:9500/api/books/title?{title} : Search for a book in the inventory with a title like "java"<br>
@@ -99,7 +145,7 @@ URL IP:9500/api/update-book : Update the book by providing the JSON for the book
 URL IP:9500/api/delete-book?{isbn} : Delete a book by providing the ISBN string for the book<br>
 
 
-### Customers
+## Customers
 #### GET methods
 URL IP:9500/api/customers  : List ALL Customers IN customers collection<br>
 URL IP:9500/api/customers/lastname?{lastname} : Search for a customer by last name<br>
@@ -112,7 +158,7 @@ URL IP:9500/api/update-customer : Update the customer by providing the JSON for 
 #### DELETE methods
 URL IP:9500/api/delete-customer?{email} : Delete a customer by providing the email for the customer<br>
 
-### Orders
+## Orders
 #### GET methods
 URL IP:9500/api/orders  : List All Orders in the order's collection<br>
 URL IP:9500/api/orders/email?{email}  : Search for an order by order email of customer<br>
