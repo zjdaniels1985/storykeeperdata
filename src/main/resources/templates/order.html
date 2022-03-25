@@ -9,7 +9,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Story Keeper</a>
+    <a class="navbar-brand" th:href="@{/index}">Story Keeper</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -33,15 +33,15 @@
 </nav>
 <h1 class="text-primary" style="margin: 1rem">Orders</h1>
 <div class="container-fluid" style="margin: 3rem">
-  <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked>
-  <label class="btn btn-secondary" for="option1">Customer Email</label>
-  <label for="inputSearch"></label><input type="text" class="form-control" name="search" id="inputSearch"  style="max-width: 35rem;margin-top: 1rem">
-  <input class="btn btn-primary" style="margin-top: 1rem" type="submit" value="Search">
+    <form th:action="@{/searchOrderEmail}" method="get">
+      <input class="form-text" type="text" name="keyword" th:value="${email}"  placeholder="Find Order by Email" size="50" >
+      <button type="submit" class="btn btn-primary" >Search</button>
+      <a th:href="@{/order}" class="btn btn-secondary">Clear</a>
+    </form>
 </div>
 
 <div>
-  <table class="table table-striped">
-    <caption>Orders Inventory</caption>
+  <table class="table table-bordered table-striped">
     <thead>
     <tr>
       <th>Customer Email</th>
@@ -54,7 +54,7 @@
     <tbody>
     <tr th:each="order : ${orderList}">
       <td th:text="${order.customerEmail}"></td>
-      <td th:text="${order.items}"></td>
+      <td th:text="${order.items.size()}"></td>
       <td th:text="${order.subTotal}"></td>
       <td th:text="${order.taxAmount}"></td>
       <td th:text="${order.grandTotal}"></td>

@@ -9,7 +9,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Story Keeper</a>
+        <a class="navbar-brand" th:href="@{/index}">Story Keeper</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -35,19 +35,25 @@
 <h1 class="text-primary" style="margin: 1rem">Books</h1>
 
 <div class="container-fluid" style="margin: 3rem">
-    <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked>
-    <label class="btn btn-secondary" for="option1">Title</label>
-
-    <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
-    <label class="btn btn-secondary" for="option2">Author</label>
-
-    <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off">
-    <label class="btn btn-secondary" for="option3">ISBN</label>
-
-    <label for="inputSearch"></label><input type="text" class="form-control" name="search" id="inputSearch"  style="max-width: 35rem;margin-top: 1rem">
-
-    <input class="btn btn-primary" style="margin-top: 1rem" type="submit" value="Search">
+    <form th:action="@{/searchTitle}" method="get">
+        <input class="form-text" type="text" name="keyword" th:value="${title}"  placeholder="Find Book by Title" size="50" >
+        <button type="submit" class="btn btn-primary" >Search</button>
+        <a th:href="@{/listBook}" class="btn btn-secondary">Clear</a>
+    </form>
+    <a style="margin: 1rem"></a>
+    <form th:action="@{/searchAuthor}" method="get">
+        <input class="form-text" type="text" name="keyword" th:value="${author}"  placeholder="Find Book by Author" size="50" >
+        <button type="submit" class="btn btn-primary" >Search</button>
+        <a th:href="@{/listBook}" class="btn btn-secondary">Clear</a>
+    </form>
+    <a style="margin: 1rem"></a>
+    <form th:action="@{/searchISBN}" method="get">
+        <input class="form-text" type="text" name="keyword" th:value="${isbn}"  placeholder="Find Book by ISBN" size="50" >
+        <button type="submit" class="btn btn-primary" >Search</button>
+        <a th:href="@{/listBook}" class="btn btn-secondary">Clear</a>
+    </form>
 </div>
+
 
 <div style="margin-block: 1rem; margin-left: 1rem">
         <form th:action="@{/addBookForm}" method="get">
