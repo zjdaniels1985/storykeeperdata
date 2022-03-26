@@ -83,11 +83,11 @@
                 <td th:text="${book.priceEach}"></td>
                 <td th:text="${book.qty}"></td>
                 <td>
-                    <a th:href="@{/showUpdateForm(bookIsbn=${book.isbn})}" class="btn btn-info">Edit</a>
+                    <a th:href="@{/showUpdateForm(id=${book.id})}" class="btn btn-info">Edit</a>
                 </td>
                 <td>
                     <form th:action="@{/remove-book}" method="post">
-                        <input type="hidden" name="isbn" th:value="${book.isbn}">
+                        <input type="hidden" name="id" th:value="${book.id}">
                         <button type="submit" class="btn btn-secondary">Delete</button>
                     </form>
                 </td>

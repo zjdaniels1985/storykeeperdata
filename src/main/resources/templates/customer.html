@@ -82,11 +82,11 @@
       <td th:text="${customer.address.getState()}"></td>
       <td th:text="${customer.address.getPostCode()}"></td>
       <td>
-        <a th:href="@{/showCustUpdateForm(custPhone=${customer.phone})}" class="btn btn-info">Edit</a>
+        <a th:href="@{/showCustUpdateForm(id=${customer.id})}" class="btn btn-info">Edit</a>
       </td>
       <td>
         <form th:action="@{/remove-customer}" method="post">
-          <input type="hidden" name="email" th:value="${customer.email}">
+          <input type="hidden" name="id" th:value="${customer.id}">
           <button type="submit" class="btn btn-secondary">Delete</button>
         </form>
       </td>

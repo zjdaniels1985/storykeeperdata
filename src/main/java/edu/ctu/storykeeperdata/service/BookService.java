@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -29,24 +30,14 @@ public class BookService {
         return repository.findAllByTitleContains(title);
     }
 
-    // get all books by the author from the collection
-    public List<Book> getBooksByAuthor(String author) {
-        return repository.findAllByAuthorContains(author);
-    }
-
-    // get all books by the publisher from the collection
-    public Book getBookByIsbn(String isbn) {
-        return repository.findByIsbnContains(isbn);
-    }
-
     // save new book record in the collection
     public void save(final Book book) {
         repository.insert(book);
     }
 
-    public void delete(final String isbn) {
-        Book foundBook = repository.findByIsbnContains(isbn);
+    public void delete(final String id) {
+        Optional<Book> foundBook = repository.findById(id);
         System.out.println("Book to delete: " + foundBook);
-        repository.delete(foundBook);
+        foundBook.ifPresent(repository::delete);
     }
 }

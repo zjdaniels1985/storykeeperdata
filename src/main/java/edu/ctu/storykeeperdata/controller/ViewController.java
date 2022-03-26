@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 //Spring annotations
@@ -95,24 +96,24 @@ public class ViewController {
     }
 
     @GetMapping("/showUpdateForm")
-    public ModelAndView showUpdateForm(@RequestParam String bookIsbn, Model model) {
+    public ModelAndView showUpdateForm(@RequestParam String id, Model model) {
         String title = "Update Book";
         model.addAttribute("title", title);
         ModelAndView mav = new ModelAndView("add-book-form");
-        Book book = bookRepo.findByIsbnContains(bookIsbn);
-        mav.addObject("formData", book);
+        Optional<Book> book = bookRepo.findById(id);
+        book.ifPresent(value -> mav.addObject("formData", value));
         return mav;
     }
 
     @PostMapping("/saveBook")
     public String saveEmployee(@ModelAttribute Book book) {
-        bookRepo.save(book);
+        bookService.save(book);
         return "redirect:/listBook";
     }
 
     @PostMapping("/remove-book")
-    public String deleteBook(@RequestParam String isbn) {
-        bookService.delete(isbn);
+    public String deleteBook(@RequestParam String id) {
+        bookService.delete(id);
         return "redirect:/listBook";
     }
 
@@ -159,24 +160,24 @@ public class ViewController {
     }
 
     @GetMapping("/showCustUpdateForm")
-    public ModelAndView showCustUpdateForm(@RequestParam String custPhone, Model model) {
+    public ModelAndView showCustUpdateForm(@RequestParam String id, Model model) {
         String title = "Update Customer";
         model.addAttribute("title", title);
         ModelAndView mav = new ModelAndView("add-customer-form");
-        Customer customer = custRepo.findDistinctByPhoneContains(custPhone);
-        mav.addObject("formData", customer);
+        Optional<Customer> customer = custRepo.findById(id);
+        customer.ifPresent(value -> mav.addObject("formData", value));
         return mav;
     }
 
     @PostMapping("/saveCustomer")
     public String saveCustomer(@ModelAttribute Customer customer) {
-        custRepo.save(customer);
+        customerService.save(customer);
         return "redirect:/listCustomer";
     }
 
     @PostMapping("/remove-customer")
-    public String deleteCustomer(@RequestParam String email) {
-        customerService.delete(email);
+    public String deleteCustomer(@RequestParam String id) {
+        customerService.delete(id);
         return "redirect:/listCustomer";
     }
 
@@ -213,8 +214,8 @@ public class ViewController {
     }
 
     @PostMapping("/remove-order")
-    public String deleteOrder(@RequestParam String email) {
-        orderService.delete(email);
+    public String deleteOrder(@RequestParam String id) {
+        orderService.delete(id);
         return "redirect:/listOrder";
     }
 

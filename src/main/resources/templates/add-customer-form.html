@@ -14,7 +14,6 @@
 
     <form th:action="@{/saveCustomer}" th:object="${formData}" method="POST">
 
-        <input type="hidden" th:field="*{id}" />
         <label class="form-label">First Name</label>
         <input type="text" th:field="*{firstName}" class="form-control col-4 mb-4" placeholder="Enter First Name" />
         <label class="form-label">Last Name</label>

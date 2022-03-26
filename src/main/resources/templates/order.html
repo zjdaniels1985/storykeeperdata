@@ -37,12 +37,6 @@
     </form>
 </div>
 
-<div style="margin-block: 1rem; margin-left: 1rem">
-  <form th:action="@{/addOrderForm}" method="get">
-    <button type="submit" class="btn btn-secondary">New Order</button>
-  </form>
-</div>
-
 <div>
   <table class="table table-bordered table-striped">
     <thead>
@@ -63,7 +57,7 @@
       <td th:text="${order.grandTotal}"></td>
       <td>
         <form th:action="@{/remove-order}" method="post">
-          <input type="hidden" name="email" th:value="${order.customerEmail}">
+          <input type="hidden" name="id" th:value="${order.id}">
           <button type="submit" class="btn btn-secondary">Order Complete</button>
         </form>
       </td>

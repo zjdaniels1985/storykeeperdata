@@ -2,7 +2,6 @@ package edu.ctu.storykeeperdata.bootstrap;
 
 import com.github.javafaker.Faker;
 import edu.ctu.storykeeperdata.model.Book;
-import edu.ctu.storykeeperdata.model.Category;
 import edu.ctu.storykeeperdata.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +51,7 @@ public class DefaultBookLoader implements CommandLineRunner {
         final String author = faker.name().fullName();
         final String publisher = faker.company().name();
         final String isbn = faker.number().digits(13);
-        final String category = Category.FICTION.toString();
+        final String category = "Fiction";
         final double priceEach = Math.round(100*faker.number().randomDouble(2,1,100)/100) ;
         final int qty = faker.number().numberBetween(1,10);
 

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @AllArgsConstructor
@@ -18,18 +19,10 @@ public class CustomerService {
 
     public List<Customer> getAllCustomers() { return repository.findAll(); }
 
-    public List<Customer> getCustomersByLastName(String lastName) {return repository.findAllByLastNameContains(lastName);}
+    public void save(final Customer customer) { repository.insert(customer); }
 
-    public Customer getCustomerByEmail(String email) { return repository.findDistinctByEmailEquals(email);}
-
-    public Customer getCustomerByPhone(String phone) { return repository.findDistinctByPhoneContains(phone);}
-
-    public Customer save(final Customer customer) { repository.insert(customer); return customer; }
-
-    public Customer delete(final String email) {
-        Customer foundCustomer = repository.findDistinctByEmailEquals(email);
-        repository.delete(foundCustomer);
-        return foundCustomer; }
-
-
+    public void delete(String id) {
+        Optional<Customer> foundCustomer = repository.findById(id);
+        foundCustomer.ifPresent(repository::delete);
+    }
 }
