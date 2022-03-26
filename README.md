@@ -1,11 +1,7 @@
 # Story Keeper
 
-## Database Requirement
-This program requires a mongodb database installed and running with a database schema name of storykeeperdb.<br>
-The username, password, and url for the database must be updated in the application.properties file if different than the default.<br>
-
-## The Docker container option for Database
-The database can be initiated using Docker. 
+## The App Uses a MongoDB Docker Container 
+The database can be initiated using Docker.<br> 
 1. Change directory into the root of the project folder and run the following:
 ```aidl
 docker-compose up -d
@@ -169,6 +165,30 @@ URL:9500/api/update-order  : Update the order by providing the JSON for the orde
 #### DELETE methods
 URL:9500/api/delete-order?{email}  : Delete an order by providing the email for the order of customer<br>
 
+# Docker Container Shutdown
+1. Navigate to the root directory of the storykeeperdata project and run the following:
+```aidl
+docker-compose down
+```
+## Remove Persistant Docker Volumes
+1. Run the Docker command to list the Docker volumes:
+```aidl
+docker volume ls
+```
+2. Run the following command to remove each volume:
+```aidl
+docker volume rm <paste the id of the volume here>
+```
+
+## Remove Old Docker Containers
+1. Run the following to list the docker containers including inactive:
+```aidl
+docker ps -a
+```
+2. Run the following command to remove an old container if any exist:
+```aidl
+docker rm <paste docker ID here>
+```
 
 ## The Project is in work 
   
