@@ -28,7 +28,8 @@ public class CustomerService {
 
     public Customer delete(final String email) {
         Customer foundCustomer = repository.findDistinctByEmailEquals(email);
-        repository.delete(foundCustomer); return foundCustomer; }
+        repository.delete(foundCustomer);
+        return foundCustomer; }
 
 
 }

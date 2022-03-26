@@ -17,35 +17,21 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/index}">Home</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link active" th:href="@{/listBook}">Books</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/customer}">Customers</a>
+                    <a class="nav-link active" th:href="@{/listCustomer}">Customers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/order}">Orders</a>
+                    <a class="nav-link active" th:href="@{/listOrder}">Orders</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-<div class="container-sm justify-content-center" style="margin-top: 10rem">
-    <form>
-        <div class="mb-3">
-            <label for="inputUsername" class="form-label">Username</label>
-            <input type="text" class="form-control" id="inputUsername" aria-describedby="usernameHelp">
-        </div>
-        <div class="mb-3">
-            <label for="inputPassword" class="form-label">Password</label>
-            <input type="password" class="form-control" id="inputPassword">
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
+<div class="d-flex justify-content-center align-items-center">
+    <img th:src="@{/img/logo.png}"/>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

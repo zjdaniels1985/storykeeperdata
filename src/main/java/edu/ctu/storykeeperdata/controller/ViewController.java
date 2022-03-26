@@ -4,6 +4,7 @@ import edu.ctu.storykeeperdata.model.Book;
 import edu.ctu.storykeeperdata.model.Customer;
 import edu.ctu.storykeeperdata.model.Order;
 import edu.ctu.storykeeperdata.repository.BookRepository;
+import edu.ctu.storykeeperdata.repository.CustomerRepository;
 import edu.ctu.storykeeperdata.repository.OrderRepository;
 import edu.ctu.storykeeperdata.service.BookService;
 import edu.ctu.storykeeperdata.service.CustomerService;
@@ -14,8 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
-
 
 
 //Spring annotations
@@ -25,32 +26,32 @@ public class ViewController {
 
     private final BookService bookService;
     private final CustomerService customerService;
-    private final BookRepository bookRepo;
     private final OrderService orderService;
+    private final BookRepository bookRepo;
+    private final CustomerRepository custRepo;
     private final OrderRepository orderRepo;
+    private List<Book> orderList = new ArrayList<>();
+
 
     @Autowired
-    public ViewController(BookService bookService, CustomerService customerService, OrderRepository orderRepo, OrderService orderService, BookRepository bookRepo) {
+    public ViewController(BookService bookService, CustomerService customerService, OrderRepository orderRepo, OrderService orderService, BookRepository bookRepo, CustomerRepository custRepo) {
         this.bookService = bookService;
         this.customerService = customerService;
         this.orderRepo = orderRepo;
         this.orderService = orderService;
         this.bookRepo = bookRepo;
+        this.custRepo = custRepo;
+
     }
 
-
+    // *************************** Index View *******************************************
     @RequestMapping({"/", "/index"})
     public String index() {
         return "index";
     }
 
 
-    @PostMapping("/remove-book")
-    public String deleteBook(@RequestParam String isbn) {
-            bookService.delete(isbn);
-            return "redirect:/listBook";
-    }
-
+    // *************************** Book Views
 
     @GetMapping("/listBook")
     public ModelAndView getAllBooks() {
@@ -93,12 +94,6 @@ public class ViewController {
         return "add-book-form";
     }
 
-    @PostMapping("/saveBook")
-    public String saveEmployee(@ModelAttribute Book book) {
-        bookRepo.save(book);
-        return "redirect:/listBook";
-    }
-
     @GetMapping("/showUpdateForm")
     public ModelAndView showUpdateForm(@RequestParam String bookIsbn, Model model) {
         String title = "Update Book";
@@ -109,15 +104,86 @@ public class ViewController {
         return mav;
     }
 
+    @PostMapping("/saveBook")
+    public String saveEmployee(@ModelAttribute Book book) {
+        bookRepo.save(book);
+        return "redirect:/listBook";
+    }
 
-    @RequestMapping("/customer")
+    @PostMapping("/remove-book")
+    public String deleteBook(@RequestParam String isbn) {
+        bookService.delete(isbn);
+        return "redirect:/listBook";
+    }
+
+
+    // ********************* Customer Views *****************************************
+
+    @RequestMapping("/listCustomer")
     public String customer(Model model) {
         List<Customer> customers = customerService.getAllCustomers();
         model.addAttribute("custList", customers);
         return "customer";
     }
 
-    @RequestMapping("/order")
+    @GetMapping("/searchCustLastName")
+    public String findCustomerByLastName(Model model, String keyword) {
+        model.addAttribute("lastname", keyword);
+        List<Customer> list = custRepo.findAllByLastNameContains(keyword);
+        model.addAttribute("custList", list);
+        return "customer";
+    }
+
+    @GetMapping("/searchCustEmail")
+    public String findCustomerByEmail(Model model, String keyword) {
+        model.addAttribute("email", keyword);
+        Customer list = custRepo.findDistinctByEmailEquals(keyword);
+        model.addAttribute("custList", list);
+        return "customer";
+    }
+
+    @GetMapping("/searchCustPhone")
+    public String findCustomerByPhone(Model model, String keyword) {
+        model.addAttribute("phone", keyword);
+        Customer list = custRepo.findDistinctByPhoneContains(keyword);
+        model.addAttribute("custList", list);
+        return "customer";
+    }
+
+    @GetMapping("/addCustomerForm")
+    public String addCustomerForm(Model model) {
+        model.addAttribute("formData", new Customer());
+        String title = "Add New Customer";
+        model.addAttribute("title", title);
+        return "add-customer-form";
+    }
+
+    @GetMapping("/showCustUpdateForm")
+    public ModelAndView showCustUpdateForm(@RequestParam String custPhone, Model model) {
+        String title = "Update Customer";
+        model.addAttribute("title", title);
+        ModelAndView mav = new ModelAndView("add-customer-form");
+        Customer customer = custRepo.findDistinctByPhoneContains(custPhone);
+        mav.addObject("formData", customer);
+        return mav;
+    }
+
+    @PostMapping("/saveCustomer")
+    public String saveCustomer(@ModelAttribute Customer customer) {
+        custRepo.save(customer);
+        return "redirect:/listCustomer";
+    }
+
+    @PostMapping("/remove-customer")
+    public String deleteCustomer(@RequestParam String email) {
+        customerService.delete(email);
+        return "redirect:/listCustomer";
+    }
+
+
+    // *********************** Order Views ************************************************
+
+    @RequestMapping("/listOrder")
     public String order(Model model) {
         List<Order> orders = orderRepo.findAll();
         model.addAttribute("orderList", orders);
@@ -131,4 +197,27 @@ public class ViewController {
         model.addAttribute("orderList", orders);
         return "order";
     }
+
+    @GetMapping("/addOrderForm")
+    public String addOrderForm(Model model) {
+        model.addAttribute("formData", new Order());
+        model.addAttribute("books", bookRepo.findAll());
+        return "add-order-form";
+    }
+
+    @PostMapping("/saveOrder")
+    public String saveOrder(@ModelAttribute Order order) {
+        orderRepo.save(order);
+        orderList.clear();
+        return "redirect:/listOrder";
+    }
+
+    @PostMapping("/remove-order")
+    public String deleteOrder(@RequestParam String email) {
+        orderService.delete(email);
+        return "redirect:/listOrder";
+    }
+
 }
+
+
