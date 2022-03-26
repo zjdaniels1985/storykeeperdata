@@ -22,14 +22,14 @@ public class Book {
     private String author;
     private String publisher;
     private String isbn;
-    private Category category;
+    private String category;
     @Field("price_each")
     private double priceEach;
     @Field("quantity")
     private int qty;
 
 
-    public Book(String title, String author, String publisher, String isbn, Category category, double priceEach, int qty) {
+    public Book(String title, String author, String publisher, String isbn, String category, double priceEach, int qty) {
         this.title = title;
         this.author = author;
         this.publisher = publisher;
