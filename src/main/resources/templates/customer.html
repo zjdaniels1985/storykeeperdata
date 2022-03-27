@@ -29,7 +29,17 @@
   </div>
 </nav>
 
-<h1 class="text-primary" style="margin: 1rem">Customers</h1>
+
+
+<div class="container" style="margin: 3rem; text-align: center; background-color: whitesmoke; overflow: hidden">
+  <svg style="display: inline-block; padding-bottom: 6px; position: relative" xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+    <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+    <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+  </svg>
+<h2 style="display: inline-block">Customers</h2>
+
+
 
 <div class="container-fluid" style="margin: 3rem">
   <form th:action="@{/searchCustLastName}" method="get">
@@ -53,8 +63,11 @@
 
 <div style="margin-block: 1rem; margin-left: 1rem">
   <form th:action="@{/addCustomerForm}" method="get">
-    <button type="submit" class="btn btn-secondary">Add Customer</button>
+    <button type="submit" class="btn btn-secondary"> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+    </svg> Add Customer</button>
   </form>
+</div>
 </div>
 
 <div>
