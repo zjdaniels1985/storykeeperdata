@@ -6,6 +6,8 @@ import edu.ctu.storykeeperdata.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -22,5 +24,10 @@ public class OrderService {
     public void delete(String id) {
         Optional<Order> foundOrder = repository.findById(id);
         foundOrder.ifPresent(repository::delete);
+    }
+
+    public List<Order> getOrderByEmail(String keyword) {
+        Optional<List<Order>> foundOrder = repository.findAllByCustomerEmailContains(keyword);
+        return foundOrder.orElseGet(ArrayList::new);
     }
 }

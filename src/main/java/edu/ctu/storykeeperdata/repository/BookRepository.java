@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookRepository extends MongoRepository<Book, String> {
@@ -17,8 +18,7 @@ public interface BookRepository extends MongoRepository<Book, String> {
     @Query("{ 'author' : { $regex : ?0, $options: 'i' } }")
     List<Book> findAllByAuthorContains(String author);
 
-    @Query("{ 'isbn' : { $regex : ?0, $options: 'i' } }")
-    Book findByIsbnContains(String Isbn);
+    Optional<List<Book>> findAllByIsbnContains(String Isbn);
 
 
 }

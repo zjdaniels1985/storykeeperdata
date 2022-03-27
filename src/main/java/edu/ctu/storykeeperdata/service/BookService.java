@@ -5,6 +5,7 @@ import edu.ctu.storykeeperdata.repository.BookRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +29,11 @@ public class BookService {
     // get all books by the title from the collection
     public List<Book> getBooksByTitle(String title) {
         return repository.findAllByTitleContains(title);
+    }
+
+    public List<Book> getBooksByISBN(String isbn) {
+        Optional<List<Book>> foundBook = repository.findAllByIsbnContains(isbn);
+        return foundBook.orElseGet(ArrayList::new);
     }
 
     // save new book record in the collection

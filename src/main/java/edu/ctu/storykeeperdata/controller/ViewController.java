@@ -31,7 +31,7 @@ public class ViewController {
     private final BookRepository bookRepo;
     private final CustomerRepository custRepo;
     private final OrderRepository orderRepo;
-    private List<Book> orderList = new ArrayList<>();
+    private final List<Book> orderList = new ArrayList<>();
 
 
     @Autowired
@@ -81,7 +81,7 @@ public class ViewController {
     @GetMapping("/searchISBN")
     public String findBookByISBN(Model model, String keyword) {
         model.addAttribute("isbn", keyword);
-        Book list = bookRepo.findByIsbnContains(keyword);
+        List<Book> list = bookService.getBooksByISBN(keyword);
         model.addAttribute("bookList", list);
         return "book";
     }
@@ -138,7 +138,7 @@ public class ViewController {
     @GetMapping("/searchCustEmail")
     public String findCustomerByEmail(Model model, String keyword) {
         model.addAttribute("email", keyword);
-        Customer list = custRepo.findDistinctByEmailEquals(keyword);
+        List<Customer> list = customerService.getCustomerByEmail(keyword);
         model.addAttribute("custList", list);
         return "customer";
     }
@@ -146,7 +146,7 @@ public class ViewController {
     @GetMapping("/searchCustPhone")
     public String findCustomerByPhone(Model model, String keyword) {
         model.addAttribute("phone", keyword);
-        Customer list = custRepo.findDistinctByPhoneContains(keyword);
+        List<Customer> list = customerService.getCustomerByPhone(keyword);
         model.addAttribute("custList", list);
         return "customer";
     }
@@ -194,7 +194,7 @@ public class ViewController {
     @GetMapping("/searchOrderEmail")
     public String findOrderByEmail(Model model, String keyword) {
         model.addAttribute("email", keyword);
-        Order orders = orderRepo.findDistinctByCustomerEmailContains(keyword);
+        List<Order> orders = orderService.getOrderByEmail(keyword);
         model.addAttribute("orderList", orders);
         return "order";
     }

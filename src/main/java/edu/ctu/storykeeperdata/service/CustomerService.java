@@ -5,6 +5,7 @@ import edu.ctu.storykeeperdata.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,5 +25,15 @@ public class CustomerService {
     public void delete(String id) {
         Optional<Customer> foundCustomer = repository.findById(id);
         foundCustomer.ifPresent(repository::delete);
+    }
+
+    public List<Customer> getCustomerByEmail(String keyword) {
+        Optional<List<Customer>> foundCustomer = repository.findAllByEmailContains(keyword);
+        return foundCustomer.orElseGet(ArrayList::new);
+    }
+
+    public List<Customer> getCustomerByPhone(String keyword) {
+        Optional<List<Customer>> foundCustomer = repository.findAllByPhoneContains(keyword);
+        return foundCustomer.orElseGet(ArrayList::new);
     }
 }
