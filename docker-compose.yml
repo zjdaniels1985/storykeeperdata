@@ -25,9 +25,19 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=storykeeperpassword
     depends_on:
       - mongodb
+  storykeeper:
+    build:
+      dockerfile: ./dockerfile
+    image: storykeeper-app
+    container_name: storykeeper-app
+    depends_on:
+      - mongodb
+    ports:
+      - "8080:8080"
+
 volumes:
   storykeeper-data: {}
 
 networks:
   default:
-    name: mongodb_network
+    name: storykeeper_network
