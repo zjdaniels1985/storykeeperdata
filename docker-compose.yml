@@ -29,7 +29,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    image: storykeeper-app
+    image: zjdaniels1985/storykeeper-app
     container_name: storykeeper-app
     depends_on:
       - mongodb
