@@ -85,6 +85,9 @@ docker ps
 4. You are now ready to RUN/DEBUG the Storykeeper Spring Application from any Java IDE, I prefer Intellij
 
 ## Run the project
+*** IF YOU ARE RUNNING THE APP FROM THE IDE YOU MUST CHANGE A PROPERTY IN THE APPLICATION.PROPERTIES FILE IN THE RESOURCES DIRECTORY ******
+*** CHANGE spring.data.mongodb.host=mongodb TO spring.data.mongodb.host=localhost ***
+
 1. Start the application by executing debug/run on the StorykeeperDataApplication.java class
 2. The Spring Cli should report building of the database collections and finally report:
 ```aidl
