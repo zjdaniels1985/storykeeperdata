@@ -4,9 +4,13 @@
 1. Spring Cli Required Download and install from:
    1. https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started.html#getting-started.installing.cli
 2. JDK 1.8 (Java 8) Required and needs to be set to default
-   1. https://www.oracle.com/java/technologies/downloads/#java8
+   1. WINDOWS: https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&product=core.service.openjdk&version=1.8.0.292
+   2. DEB Based Package Manager (Ubuntu): sudo apt install openjdk-8-jdk
+       a. Remember to update PATH in .bashrc or .profile file under your home profile...Google it!
+   3, For all other Operating Systems...Google it!
 3. Maven is Required:
    1. https://maven.apache.org/download.cgi
+
 ## IDE Setup
 1. Make sure IDE is using JDK 8.
    1. Check with IDE instructions on how to set the SDK version
