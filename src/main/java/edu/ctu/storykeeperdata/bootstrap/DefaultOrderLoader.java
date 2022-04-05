@@ -8,21 +8,19 @@ import edu.ctu.storykeeperdata.service.CustomerService;
 import edu.ctu.storykeeperdata.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 // Lombok annotation for logger
 @Slf4j
 // Spring annotation
 @Component
-public class DefaultOrderLoader implements CommandLineRunner {
+public class DefaultOrderLoader implements CommandLineRunner, Ordered {
 
     private final OrderService orderService;
     private final CustomerService custService;
     private final BookService bookService;
-
-
 
     public DefaultOrderLoader(OrderService orderService, CustomerService custService, BookService bookService) {
         this.orderService = orderService;
@@ -33,17 +31,23 @@ public class DefaultOrderLoader implements CommandLineRunner {
     // will add the dummy employee data in the mongodb collection
     // will be executed automatically on the application startup
     @Override
-    public void run(String...args) {
+    public void run(String... args) throws Exception {
+        log.info("Running OrderLoader");
         if (orderService.getCollectionCount() == 0) {
             log.info("Saving default orders in the collection");
             List<Customer> customers = custService.getAllCustomers();
-            for (int i=0; i<11; i++) {
+            for (int i = 0; i < 11; i++) {
                 Customer customer = customers.get(i);
                 persist(customer);
             }
         } else {
             log.info("Default orders are already present in the orders collection");
         }
+    }
+
+    @Override
+    public int getOrder() {
+        return 3;
     }
 
     // calls the service layer method which in turn calls the dao layer method
@@ -60,7 +64,6 @@ public class DefaultOrderLoader implements CommandLineRunner {
         final double subTotal = 2.00;
         final double taxAmount = 0.99;
         final double grandTotal = subTotal + taxAmount;
-
 
         return Order.builder()
                 .customerEmail(customerEmail)

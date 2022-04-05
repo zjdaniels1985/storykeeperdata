@@ -6,15 +6,14 @@ import edu.ctu.storykeeperdata.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
-
 
 // Lombok annotation for logger
 @Slf4j
 // Spring annotation
 @Component
-public class DefaultBookLoader implements CommandLineRunner {
-
+public class DefaultBookLoader implements CommandLineRunner, Ordered {
 
     private final BookService service;
     private final Faker faker;
@@ -25,17 +24,22 @@ public class DefaultBookLoader implements CommandLineRunner {
         this.faker = faker1;
     }
 
-
     @Override
-    public void run(String...args) {
+    public void run(String... args) throws Exception {
+        log.info("Running BookLoader");
         if (service.getCollectionCount() == 0) {
             log.info("Saving default books in the collection");
-            for (int i=0; i<11; i++) {
+            for (int i = 0; i < 11; i++) {
                 persist();
             }
         } else {
             log.info("Default books are already present in the mongo collection");
         }
+    }
+
+    @Override
+    public int getOrder() {
+        return 1;
     }
 
     // calls the service layer method which in turn calls the dao layer method
@@ -52,8 +56,8 @@ public class DefaultBookLoader implements CommandLineRunner {
         final String publisher = faker.company().name();
         final String isbn = faker.number().digits(13);
         final String category = "Fiction";
-        final double priceEach = Math.round(100*faker.number().randomDouble(2,1,100)/100) ;
-        final int qty = faker.number().numberBetween(1,10);
+        final double priceEach = Math.round(100 * faker.number().randomDouble(2, 1, 100) / 100);
+        final int qty = faker.number().numberBetween(1, 10);
 
         return Book.builder()
                 .title(title)

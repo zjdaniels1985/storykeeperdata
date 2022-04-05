@@ -1,31 +1,5 @@
 # Story Keeper
 
-## The App Uses a MongoDB Docker Container 
-The database can be initiated using Docker.<br> 
-1. Change directory into the root of the project folder and run the following:
-```aidl
-docker-compose up -d
-```
-
-## Check Docker Status
-```aidl
-docker ps
-```
-Both the MongoDB and ExpressMongo Containers should be up and running:
-```aidl
-CONTAINER ID   IMAGE           COMMAND                  CREATED       STATUS       PORTS                                           NAMES
-1f29a80479c6   mongo-express   "tini -- /docker-ent…"   4 hours ago   Up 4 hours   0.0.0.0:9001->8081/tcp, :::9001->8081/tcp       mongo-express
-6e376c4e70f9   mongo           "docker-entrypoint.s…"   3 days ago    Up 4 hours   0.0.0.0:27017->27017/tcp, :::27017->27017/tcp   mongodb
-
-```
-## Database Setup
-1. Navigate to the following url in the browser if you have mongo-express container running:
-   1. localhost:9001
-2. Type: 'storykeeperdb' into the Create Database Input for the Database name:
-![img.png](img.png)
-3. and Click the +Create Database Button.
-4. You are now ready to start the Spring Application from any Java IDE, I prefer Intellij
-
 ## Development Environment Setup
 1. Spring Cli Required Download and install from:
    1. https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started.html#getting-started.installing.cli
@@ -39,6 +13,77 @@ CONTAINER ID   IMAGE           COMMAND                  CREATED       STATUS    
 2. Open the pom.xml file in the editor
 3. Right-Click in the open pom.xml file in the editor and select Maven-> Reload Project. This will download the required Maven/Spring Dependencies
 
+## The App and Database Uses Docker Container Technology
+
+### The mongo database container needs to be setup before first
+1. Comment out the storykeeper service priot to proceeding
+    a. open the docker-compose.yml file from the project root directory in any text editor
+    b. highlight the following portion of the file.
+```
+  storykeeper:
+    build:
+      context: .
+      dockerfile: ./dockerfile
+    image: storykeeper-app
+    container_name: storykeeper-app
+    depends_on:
+      - mongodb
+    ports:
+      - "8080:8080"
+```
+   c. Press Ctrl+/ on the keyboard to comment out this section.
+   d. The repository starts with the mongoexpress container already commented out, uncomment the following section for development and setup of the database
+```
+  #   mongo-express:
+  #     container_name: mongo-express
+  #     image: mongo-express
+  #     ports:
+  #       - '9001:8081'
+  #     environment:
+  #       - ME_CONFIG_MONGODB_SERVER=mongodb
+  #       - ME_CONFIG_MONGODB_PORT=27017
+  #       - ME_CONFIG_MONGODB_ADMINUSERNAME=storykeeperroot
+  #       - ME_CONFIG_MONGODB_ADMINPASSWORD=storykeeperpassword
+  #     depends_on:
+  #       - mongodb
+```
+2. Save the file
+4. Change directory to the root of the project directory in a terminal or cmd prompt in windows and run the following command
+```
+docker-compose up -d
+```
+5. Check Docker Status by running the following command in the termina/cmd prompt:
+```aidl
+docker ps
+```
+7. The following containers should be Up and listed as such:
+```
+CONTAINER ID   IMAGE           COMMAND                  CREATED       STATUS       PORTS                                           NAMES
+1f29a80479c6   mongo-express   "tini -- /docker-ent…"   4 hours ago   Up 4 hours   0.0.0.0:9001->8081/tcp, :::9001->8081/tcp       mongo-express
+6e376c4e70f9   mongo           "docker-entrypoint.s…"   3 days ago    Up 4 hours   0.0.0.0:27017->27017/tcp, :::27017->27017/tcp   mongodb
+```
+8. *** mongo-express may fail to start ***
+9. Run the following
+```
+docker ps -a
+```
+10. From the output copy the CONTAINER ID for the mongo-express container and enter the following:
+```
+docker start <enter the CONTAINER ID here>
+```
+11. Recheck the status of running containers with
+```
+docker ps
+```
+
+## Database Setup
+1. Navigate to the following url in the browser if you have mongo-express container running:
+   1. localhost:9001
+2. Type: 'storykeeperdb' into the Create Database Input for the Database name:
+![img.png](img.png)
+3. and Click the +Create Database Button.
+4. You are now ready to RUN/DEBUG the Storykeeper Spring Application from any Java IDE, I prefer Intellij
+
 ## Run the project
 1. Start the application by executing debug/run on the StorykeeperDataApplication.java class
 2. The Spring Cli should report building of the database collections and finally report:
@@ -50,6 +95,28 @@ CONTAINER ID   IMAGE           COMMAND                  CREATED       STATUS    
    2. The Story Keeper Application Login screen should be shown:
 ![img_1.png](img_1.png)
 
+## Containerize the Storykeeper app for production environment
+1. After developing and debugging perform the following steps
+2. Uncomment storykeeper service in the docker-compose.yml file, recommend commenting out the mongo-express container service for security purposes
+3. Change directory to the root of the project folder in the terminal/cmd prompt
+4. Run the following command to teardown the initial docker containers:
+```
+docker-compose down
+```
+5. No container should be listed when checking running containers by entering the following cmd:
+```
+docker ps
+```
+6. Build the storykeeper container and start the application:
+   a. In the root directory of the project run the following
+   ```
+   mvn clean
+   ```
+   b. Then the following:
+   ```
+   docker-compose up -d
+   ```
+7. ALL DONE! Now the app is running in a container along with the mongo database container.
 
 
 ## Data Models

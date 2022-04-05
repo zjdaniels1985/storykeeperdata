@@ -3,12 +3,15 @@ package edu.ctu.storykeeperdata.service;
 import edu.ctu.storykeeperdata.model.Book;
 import edu.ctu.storykeeperdata.repository.BookRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @AllArgsConstructor
 @Service
 public class BookService {
@@ -43,7 +46,7 @@ public class BookService {
 
     public void delete(final String id) {
         Optional<Book> foundBook = repository.findById(id);
-        System.out.println("Book to delete: " + foundBook);
+        log.info("Book to delete: " + foundBook);
         foundBook.ifPresent(repository::delete);
     }
 }
