@@ -27,17 +27,17 @@ services:
     depends_on:
       - mongodb
 
-  # storykeeper:
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfile
-  #   image: zjdaniels1985/storykeeper-app
-  #   container_name: storykeeper-app
-  #   depends_on:
-  #     - mongodb
-  #   ports:
-  #     - "8080:8080"
-  #   restart: always
+#  storykeeper:
+#    build:
+#      context: .
+#      dockerfile: ./Dockerfile
+#    image: zjdaniels1985/storykeeper-app
+#    container_name: storykeeper-app
+#    depends_on:
+#      - mongodb
+#    ports:
+#      - "8080:8080"
+#    restart: always
 
 volumes:
   storykeeper-data: {}

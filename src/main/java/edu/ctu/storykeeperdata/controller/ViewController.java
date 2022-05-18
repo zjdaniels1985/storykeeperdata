@@ -95,8 +95,8 @@ public class ViewController {
         return "add-book-form";
     }
 
-    @GetMapping("/showUpdateForm")
-    public ModelAndView showUpdateForm(@RequestParam String id, Model model) {
+    @GetMapping("/showBookUpdateForm")
+    public ModelAndView showBookUpdateForm(@RequestParam String id, Model model) {
         String title = "Update Book";
         model.addAttribute("title", title);
         ModelAndView mav = new ModelAndView("add-book-form");
@@ -199,17 +199,25 @@ public class ViewController {
         return "order";
     }
 
+    @GetMapping("/showOrderUpdateForm")
+    public ModelAndView showOrderUpdateForm(@RequestParam String id, Model model){
+        String title = "Update Order";
+        model.addAttribute("title", title);
+        ModelAndView mav = new ModelAndView("add-order-form");
+        Optional<Order> order = orderRepo.findOrderById(id);
+        order.ifPresent(value -> mav.addObject("formData", value));
+        return mav;
+    }
+
     @GetMapping("/addOrderForm")
     public String addOrderForm(Model model) {
         model.addAttribute("formData", new Order());
-        model.addAttribute("books", bookRepo.findAll());
         return "add-order-form";
     }
 
     @PostMapping("/saveOrder")
     public String saveOrder(@ModelAttribute Order order) {
         orderRepo.save(order);
-        orderList.clear();
         return "redirect:/listOrder";
     }
 

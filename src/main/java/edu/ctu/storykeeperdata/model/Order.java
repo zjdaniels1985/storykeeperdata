@@ -37,11 +37,9 @@ public class Order {
 
     }
 
-    public void setSubTotal(List<Book> listBook) {
-        double price = 0.00;
-        for(Book book : listBook) {
-            price = price + book.getPriceEach();
-        }
+    public void setSubTotal() {
+        double price = 2.00;
+        //TODO: Add functionality to set Subtotal based on books in order, currently breaks UpdateOrder functionality if adding parameter
 
         this.subTotal = Math.round(100 * price)/100.0;
     }
@@ -67,4 +65,5 @@ public class Order {
     public double getGrandTotal() {
         return this.grandTotal;
     }
+
 }
