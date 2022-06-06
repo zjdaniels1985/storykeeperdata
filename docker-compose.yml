@@ -8,7 +8,7 @@ services:
       - '27017:27017'
     volumes:
       - storykeeper-data:/data/db
-    restart: always
+    restart: unless-stopped
     environment:
       - MONGO_INITDB_DATABASE=storykeeperdb
       - MONGO_INITDB_ROOT_USERNAME=storykeeperroot
@@ -19,6 +19,7 @@ services:
     image: mongo-express
     ports:
       - '9001:8081'
+    restart: unless-stopped
     environment:
       - ME_CONFIG_MONGODB_SERVER=mongodb
       - ME_CONFIG_MONGODB_PORT=27017
