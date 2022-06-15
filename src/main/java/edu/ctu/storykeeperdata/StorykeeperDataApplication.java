@@ -12,7 +12,7 @@ public class StorykeeperDataApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(StorykeeperDataApplication.class, args);
-        log.info("Springboot and mongodb sequence id generator started successfully.");
+        log.info("Springboot and mongodb started successfully.");
     }
 
 }

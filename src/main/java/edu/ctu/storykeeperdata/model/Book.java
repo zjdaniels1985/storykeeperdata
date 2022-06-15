@@ -1,10 +1,7 @@
 package edu.ctu.storykeeperdata.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -14,6 +11,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @NoArgsConstructor
 @Builder
 @Data
+@Setter
+@Getter
+@ToString
 public class Book {
 
     @Id

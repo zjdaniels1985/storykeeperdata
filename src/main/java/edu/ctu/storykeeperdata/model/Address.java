@@ -1,14 +1,14 @@
 package edu.ctu.storykeeperdata.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
+@ToString
 public class Address {
 
     private String addressLine1;

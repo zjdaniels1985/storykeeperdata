@@ -1,9 +1,6 @@
 package edu.ctu.storykeeperdata.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -12,6 +9,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @NoArgsConstructor
 @Document(collection = "customers")
 @Builder
+@Getter
+@Setter
+@ToString
 @Data
 public class Customer {
 
@@ -24,14 +24,4 @@ public class Customer {
     private String email;
     private String phone;
     private Address address;
-
-
-    public Customer(String firstName, String lastName, String email, String phone, Address address) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-
-    }
 }
