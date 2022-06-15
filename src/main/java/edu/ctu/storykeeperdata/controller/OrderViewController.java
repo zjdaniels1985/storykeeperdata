@@ -20,14 +20,14 @@ public class OrderViewController {
     }
 
 
-    @RequestMapping("/listOrder")
+    @RequestMapping("/app/listOrder")
     public String order(Model model) {
         List<Order> orders = orderService.getAllOrders();
         model.addAttribute("orderList", orders);
         return "order";
     }
 
-    @GetMapping("/searchOrderEmail")
+    @GetMapping("/app/searchOrderEmail")
     public String findOrderByEmail(Model model, String keyword) {
         model.addAttribute("email", keyword);
         List<Order> orders = orderService.getOrderByEmail(keyword);
@@ -46,21 +46,21 @@ public class OrderViewController {
 //        return mav;
 //    }
 
-    @GetMapping("/addOrderForm")
+    @GetMapping("/app/addOrderForm")
     public String addOrderForm(Model model) {
         model.addAttribute("formData", new Order());
         return "add-order-form";
     }
 
-    @PostMapping("/saveOrder")
+    @PostMapping("/app/saveOrder")
     public String saveOrder(@ModelAttribute Order order) {
         orderService.save(order);
-        return "redirect:/listOrder";
+        return "redirect:/app/listOrder";
     }
 
-    @PostMapping("/remove-order")
+    @PostMapping("/app/remove-order")
     public String deleteOrder(@RequestParam String id) {
         orderService.delete(id);
-        return "redirect:/listOrder";
+        return "redirect:/app/listOrder";
     }
 }

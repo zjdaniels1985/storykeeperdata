@@ -23,14 +23,14 @@ public class CustomerViewController {
         this.customerService = customerService;
     }
 
-    @GetMapping("/listCustomer")
+    @GetMapping("/app/listCustomer")
     public String customer(Model model) {
         List<Customer> customerList = customerService.getAllCustomers();
         model.addAttribute("custList", customerList);
         return "customer";
     }
 
-    @GetMapping("/searchCustLastName")
+    @GetMapping("/app/searchCustLastName")
     public String findCustomerByLastName(Model model, String keyword) {
         model.addAttribute("lastname", keyword);
         List<Customer> customerList = customerService.getCustomersByLastName(keyword);
@@ -38,7 +38,7 @@ public class CustomerViewController {
         return "customer";
     }
 
-    @GetMapping("/searchCustEmail")
+    @GetMapping("/app/searchCustEmail")
     public String findCustomerByEmail(Model model, String keyword) {
         model.addAttribute("email", keyword);
         List<Customer> customerList = customerService.getCustomersByEmail(keyword);
@@ -46,7 +46,7 @@ public class CustomerViewController {
         return "customer";
     }
 
-    @GetMapping("/searchCustPhone")
+    @GetMapping("/app/searchCustPhone")
     public String findCustomerByPhone(Model model, String keyword) {
         model.addAttribute("phone", keyword);
         List<Customer> customerList = customerService.getCustomersByPhone(keyword);
@@ -54,7 +54,7 @@ public class CustomerViewController {
         return "customer";
     }
 
-    @GetMapping("/addCustomerForm")
+    @GetMapping("/app/addCustomerForm")
     public String addCustomerForm(Model model) {
         model.addAttribute("formData", new Customer());
         String title = "Add New Customer";
@@ -62,7 +62,7 @@ public class CustomerViewController {
         return "add-customer-form";
     }
 
-    @GetMapping("/showCustUpdateForm")
+    @GetMapping("/app/showCustUpdateForm")
     public ModelAndView showCustUpdateForm(@RequestParam String id, Model model) {
         String title = "Update Customer";
         model.addAttribute("title", title);
@@ -72,15 +72,15 @@ public class CustomerViewController {
         return mav;
     }
 
-    @PostMapping("/saveCustomer")
+    @PostMapping("/app/saveCustomer")
     public String saveCustomer(@ModelAttribute Customer customer) {
         customerService.save(customer);
-        return "redirect:/listCustomer";
+        return "redirect:/app/listCustomer";
     }
 
-    @PostMapping("/remove-customer")
+    @PostMapping("/app/remove-customer")
     public String deleteCustomer(@RequestParam String id) {
         customerService.delete(id);
-        return "redirect:/listCustomer";
+        return "redirect:/app/listCustomer";
     }
 }

@@ -24,7 +24,7 @@ public class BookViewController {
     }
 
 
-    @GetMapping("/listBook")
+    @GetMapping("/app/listBook")
     public ModelAndView getAllBooks() {
         ModelAndView mav = new ModelAndView("book");
         mav.addObject("bookList", bookService.getAllBooks());
@@ -32,7 +32,7 @@ public class BookViewController {
     }
 
 
-    @GetMapping("/searchTitle")
+    @GetMapping("/app/searchTitle")
     public String findBookByTitle(Model model, String keyword) {
         model.addAttribute("title", keyword);
         List<Book> bookList = bookService.getBooksByTitle(keyword);
@@ -40,7 +40,7 @@ public class BookViewController {
         return "book";
     }
 
-    @GetMapping("/searchAuthor")
+    @GetMapping("/app/searchAuthor")
     public String findBookByAuthor(Model model, String keyword) {
         model.addAttribute("author", keyword);
         List<Book> bookList = bookService.getBooksByAuthor(keyword);
@@ -48,7 +48,7 @@ public class BookViewController {
         return "book";
     }
 
-    @GetMapping("/searchISBN")
+    @GetMapping("/app/searchISBN")
     public String findBookByISBN(Model model, String keyword) {
         model.addAttribute("isbn", keyword);
         List<Book> bookList = bookService.getBooksByIsbn(keyword);
@@ -57,7 +57,7 @@ public class BookViewController {
     }
 
 
-    @GetMapping("/addBookForm")
+    @GetMapping("/app/addBookForm")
     public String addBookForm(Model model) {
         model.addAttribute("formData", new Book());
         String title = "Add New Book";
@@ -65,7 +65,7 @@ public class BookViewController {
         return "add-book-form";
     }
 
-    @GetMapping("/showBookUpdateForm")
+    @GetMapping("/app/showBookUpdateForm")
     public ModelAndView showBookUpdateForm(@RequestParam String id, Model model) {
         String title = "Update Book";
         model.addAttribute("title", title);
@@ -75,15 +75,15 @@ public class BookViewController {
         return mav;
     }
 
-    @PostMapping("/saveBook")
+    @PostMapping("/app/saveBook")
     public String saveEmployee(@ModelAttribute Book book) {
         bookService.save(book);
-        return "redirect:/listBook";
+        return "redirect:/app/listBook";
     }
 
-    @PostMapping("/remove-book")
+    @PostMapping("/app/remove-book")
     public String deleteBook(@RequestParam String id) {
         bookService.delete(id);
-        return "redirect:/listBook";
+        return "redirect:/app/listBook";
     }
 }
